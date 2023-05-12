@@ -8,7 +8,8 @@ tts服务支持：搜狗https://fanyi.sogou.com/reventondc/synthesis?text=${word
 
 ## 安装
 ``` shell
-git clone 
+git clone https://github.com/Dramalf/GRE3000-cli.git
+sudo npm i . -g
 ```
 ## 启动
 
