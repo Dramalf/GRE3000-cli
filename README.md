@@ -6,6 +6,9 @@ GRE3000 单词来源 : https://github.com/liurui39660/3000/blob/master/3000.xlsx
 
 ## 安装
 
+```shell
+npm i gre3000-cli -g
+```
 
 ## 启动
 
@@ -37,5 +40,5 @@ gre -h
 * 按 回车键 切换到下一个单词
 
 ## example
-![example](https://github.com/Dramalf/GRE3000-cli/assets/43701793/eedafe5d-eadb-4b6a-9355-067c2c197efa)
 
+![example](https://github.com/Dramalf/GRE3000-cli/assets/43701793/eedafe5d-eadb-4b6a-9355-067c2c197efa)
