@@ -4,15 +4,12 @@
 
 GRE3000 单词来源 : https://github.com/liurui39660/3000/blob/master/3000.xlsx
 
-tts服务支持：搜狗https://fanyi.sogou.com/reventondc/synthesis?text=${word}&speed=1&lang=enS&from=translateweb&speaker=6
+tts服务支持：搜狗https://fanyi.sogou.com/reventondc/synthesis?text=${word}&speed=1&lang=enS&from=translateweb&speaker=5
 
 ## 安装
-
-
-```shell
-npm i gre3000-cli -g
+``` shell
+git clone 
 ```
-
 ## 启动
 
 🤓默认模式启动（朗读单词）
