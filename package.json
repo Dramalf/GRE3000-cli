@@ -1,6 +1,6 @@
 {
   "name": "gre3000-cli",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "就是给中国GRE考生背单词用的，就不写英文了",
   "type": "module",
   "main": "app.js",
