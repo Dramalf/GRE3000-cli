@@ -37,4 +37,5 @@ gre -h
 * 按 回车键 切换到下一个单词
 
 ## example
+![example](https://github.com/Dramalf/GRE3000-cli/assets/43701793/eedafe5d-eadb-4b6a-9355-067c2c197efa)
 
