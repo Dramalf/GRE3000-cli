@@ -1,0 +1,24 @@
+{
+  "name": "gre3000",
+  "version": "1.0.0",
+  "description": "",
+  "type": "module",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "@inquirer/prompts": "^1.0.3",
+    "chalk": "^5.0.1",
+    "commander": "^9.4.0",
+    "google-tts-api": "^2.0.2",
+    "node-xlsx": "^0.21.2",
+    "ora": "^6.3.0",
+    "sound-play": "^1.1.0"
+  },
+  "author": "",
+  "license": "ISC",
+  "bin": {
+    "gre": "./app.js"
+  }
+}
