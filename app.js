@@ -10,19 +10,39 @@ import * as googleTTS from 'google-tts-api';
 import { input } from '@inquirer/prompts';
 import { fileURLToPath } from 'url'
 
-
-
-
-
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
 const args = process.argv.slice(2);
 const log = console.log;
+let needSpell = true;
+const logo =
+    `   ______ ____   ______ _____ ____   ____   ____ 
+  / ____// __ \\ / ____/|__ / / __ \\ / __ \\ / __ \\
+ / / __ / /_/ // __/   /_ < / / / // / / // / / /
+/ /_/ // _, _// /___ ___/ // /_/ // /_/ // /_/ / 
+\\____//_/ |_|/_____//____/ \\____/ \\____/ \\____/  
+                                                `
+const helpInfo = `
+${chalk.bold('Usage:')} gre [options]
 
-if (args[0] == '-h') {
-    log(chalk.yellowBright(`\n\n- [a-zA-Z] First letter search\n- [.] Full dictionary search\n- Press enter key to switch word\n- Press / to replay the sound`));
+${chalk.bold('Options:')}
+${'-'.padEnd(15)}run in default mode(spell word)
+${'-s'.padEnd(15)}run in silence mode(no word spell)
+${'-h'.padEnd(15)}print node command line options (currently set) 
+
+${chalk.bold('Runtime:')}
+${'a-zA-Z'.padEnd(15)}First letter search
+${'.'.padEnd(15)}Full dictionary search
+${'/'.padEnd(15)}Replay the sound
+${'enter'.padEnd(15)}Switch to next word
+
+${chalk.cyan.bold('Find more at:'.padEnd(15)) + chalk.magenta.underline('https://github.com/Dramalf/GRE3000-cli')}
+`
+if (args[0] === '-h') {
+    log(helpInfo)
     process.exit();
 }
+if (args[0] === '-s') needSpell = false;
 
 // read dictionary
 const spinner = ora(`Loading ${chalk.red('dictionary')}`).start();
@@ -44,6 +64,7 @@ let book = dic
 let initial = false
 const audioPath = path.join(__dirname, 'temp.mp3')
 let hasAudio = false
+
 const rl = readline.createInterface({
     input: process.stdin,
 });
@@ -53,11 +74,28 @@ rl.input.on('keypress', (key) => {
     }
     return null;
 });
-const isFirstLetterEnglish = (str) => {
+
+function isFirstLetterEnglish(str) {
     const pattern = /^[a-zA-Z]/;
     return pattern.test(str);
 };
-const show = (text) => {
+function speak(word) {
+    hasAudio = false;
+    needSpell && googleTTS
+        .getAudioBase64(word, {
+            lang: 'en',
+            slow: false,
+            host: 'https://translate.google.com',
+            timeout: 3000,
+        })
+        .then(base64Data => {
+            const audioBuffer = Buffer.from(base64Data, 'base64');
+            fs.writeFileSync(audioPath, audioBuffer);
+            sound.play(audioPath)
+            hasAudio = true;
+        })
+}
+function show(text) {
     input({
         message: chalk.cyanBright.bold(text)
     }).then((res) => {
@@ -69,37 +107,15 @@ const show = (text) => {
         }
         if (lastWord) {
             const [, lp, , , lm,] = lastWord
-            log(
-                chalk.yellowBright('* ') +
-                chalk.white.bold(lm) +
-                new Array(20 < lm.length ? 3 : 20 - lm.length).fill(' ').join(' ') +
-                chalk.magenta(`/${lp.slice(1, lp.length - 1)}/`) +
-                '\r\n'
-            )
+            log(`${chalk.yellowBright('* ')}${chalk.white.bold(lm.padEnd(30))}${chalk.magenta(`/${lp.slice(1, lp.length - 1)}/`)}\n`)
         }
         const random = Math.floor(Math.random() * book.length);
         lastWord = book[random]
         const [word] = lastWord;
         show(word);
-        hasAudio = false;
-        googleTTS
-            .getAudioBase64(word, {
-                lang: 'en',
-                slow: false,
-                host: 'https://translate.google.com',
-                timeout: 3000,
-            })
-            .then(base64Data => {
-                const audioBuffer = Buffer.from(base64Data, 'base64');
-                fs.writeFileSync(audioPath, audioBuffer);
-                sound.play(audioPath)
-                hasAudio = true;
-            })
+        speak(word);
 
     })
 }
-show(chalk.gray(`Press any key to start 
-- [a-zA-Z] First letter search 
-- [.] Full dictionary search 
-- Press enter key to switch word 
-- Press / to replay the sound`))
+log(chalk.red(logo));
+show('Press any key to start')
