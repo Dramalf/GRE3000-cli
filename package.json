@@ -8,6 +8,7 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
+    "@google-cloud/text-to-speech": "^4.2.2",
     "@inquirer/prompts": "^1.0.3",
     "chalk": "^5.0.1",
     "commander": "^9.4.0",
@@ -15,6 +16,7 @@
     "gre3000-cli": "^1.0.1",
     "node-xlsx": "^0.21.2",
     "ora": "^6.3.0",
+    "say.js": "^1.4.0",
     "sound-play": "^1.1.0"
   },
   "author": "Dramalf",
