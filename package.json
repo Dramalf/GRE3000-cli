@@ -1,6 +1,6 @@
 {
   "name": "gre3000-cli",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "就是给中国GRE考生背单词用的，就不写英文了",
   "type": "module",
   "main": "app.js",
@@ -12,6 +12,7 @@
     "chalk": "^5.0.1",
     "commander": "^9.4.0",
     "google-tts-api": "^2.0.2",
+    "gre3000-cli": "^1.0.1",
     "node-xlsx": "^0.21.2",
     "ora": "^6.3.0",
     "sound-play": "^1.1.0"

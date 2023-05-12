@@ -93,7 +93,9 @@ function speak(word) {
             fs.writeFileSync(audioPath, audioBuffer);
             sound.play(audioPath)
             hasAudio = true;
-        })
+        }).catch()
+
+
 }
 function show(text) {
     input({
@@ -118,4 +120,4 @@ function show(text) {
     })
 }
 log(chalk.red(logo));
-show('Press any key to start')
+show('Press any key to start!')
