@@ -8,10 +8,7 @@ import fs from 'fs'
 import sound from 'sound-play';
 import readline from 'readline';
 import { input } from '@inquirer/prompts';
-import say from 'say';
 import { fileURLToPath } from 'url'
-import textToSpeech from '@google-cloud/text-to-speech';
-import { fstat } from 'fs';
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
@@ -85,7 +82,7 @@ function isFirstLetterEnglish(str) {
 function speak(word) {
     hasAudio = false;
     if (needSpell && !ttsServiceFail) {
-        fetch(`https://fanyi.sogou.com/reventondc/synthesis?text=${word}&speed=1&lang=enS&from=translateweb&speaker=6`)
+        fetch(`https://fanyi.sogou.com/reventondc/synthesis?text=${word}&speed=0.8&lang=enS&from=translateweb&speaker=5`)
             .then(res => {
                 const file = fs.createWriteStream(audioPath);
                 res.body.pipe(file)
