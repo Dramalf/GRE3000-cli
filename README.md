@@ -1,6 +1,7 @@
 # GRE3000 CLI
 
-就是给中国GRE考生背单词用的，就不写英文了
+就是给中国GRE考生背单词用的，就不写英文了。用命令行形式，比较适合摸鱼时候用比较隐蔽😄页面也比较简单，不容易走神
+字颜色适合深色背景终端，后续考虑可配置
 
 GRE3000 单词来源 : https://github.com/liurui39660/3000/blob/master/3000.xlsx
 
@@ -9,6 +10,8 @@ tts服务支持：搜狗https://fanyi.sogou.com/reventondc/synthesis?text=${word
 ## 安装
 ``` shell
 git clone https://github.com/Dramalf/GRE3000-cli.git
+cd GRE3000-cli
+npm i
 sudo npm i . -g
 ```
 ## 启动
