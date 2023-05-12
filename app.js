@@ -2,13 +2,16 @@
 import xlsx from 'node-xlsx';
 import chalk from 'chalk';
 import ora from 'ora';
-import fs from 'fs'
 import path from 'path'
+import fetch from 'node-fetch';
+import fs from 'fs'
 import sound from 'sound-play';
 import readline from 'readline';
-import * as googleTTS from 'google-tts-api';
 import { input } from '@inquirer/prompts';
+import say from 'say';
 import { fileURLToPath } from 'url'
+import textToSpeech from '@google-cloud/text-to-speech';
+import { fstat } from 'fs';
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
@@ -64,7 +67,7 @@ let book = dic
 let initial = false
 const audioPath = path.join(__dirname, 'temp.mp3')
 let hasAudio = false
-
+let ttsServiceFail = false;
 const rl = readline.createInterface({
     input: process.stdin,
 });
@@ -81,21 +84,23 @@ function isFirstLetterEnglish(str) {
 };
 function speak(word) {
     hasAudio = false;
-    needSpell && googleTTS
-        .getAudioBase64(word, {
-            lang: 'en',
-            slow: false,
-            host: 'https://translate.google.com',
-            timeout: 3000,
-        })
-        .then(base64Data => {
-            const audioBuffer = Buffer.from(base64Data, 'base64');
-            fs.writeFileSync(audioPath, audioBuffer);
-            sound.play(audioPath)
-            hasAudio = true;
-        }).catch()
+    if (needSpell && !ttsServiceFail) {
+        fetch(`https://fanyi.sogou.com/reventondc/synthesis?text=${word}&speed=1&lang=enS&from=translateweb&speaker=6`)
+            .then(res => {
+                const file = fs.createWriteStream(audioPath);
+                res.body.pipe(file)
+                file.on('finish', () => {
 
-
+                    hasAudio = true
+                    sound.play(audioPath)
+                })
+            }).catch(err => {
+                if (!ttsServiceFail) {
+                    log(chalk.red('单词朗读服务失败'))
+                }
+                ttsServiceFail = true;
+            })
+    }
 }
 function show(text) {
     input({
@@ -120,4 +125,4 @@ function show(text) {
     })
 }
 log(chalk.red(logo));
-show('Press any key to start!')
+show('Press any key to start')
