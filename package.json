@@ -1,7 +1,7 @@
 {
   "name": "gre3000",
   "version": "1.0.0",
-  "description": "",
+  "description": "就是给中国GRE考生背单词用的，就不写英文了",
   "type": "module",
   "main": "app.js",
   "scripts": {
@@ -17,9 +17,25 @@
     "ora": "^6.3.0",
     "sound-play": "^1.1.0"
   },
-  "author": "",
+  "author": "Dramalf",
   "license": "ISC",
   "bin": {
-    "gre": "./app.js"
-  }
+    "gre": "app.js"
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Dramalf/GRE3000-cli.git"
+  },
+  "keywords": [
+    "gre",
+    "gre3000",
+    "cli",
+    "nodejs",
+    "vocabulary"
+  ],
+  "bugs": {
+    "url": "https://github.com/Dramalf/GRE3000-cli/issues"
+  },
+  "homepage": "https://github.com/Dramalf/GRE3000-cli#readme"
 }
