@@ -9,12 +9,15 @@ import sound from 'sound-play';
 import readline from 'readline';
 import { input } from '@inquirer/prompts';
 import { fileURLToPath } from 'url'
+import { createRequire } from 'node:module';
 
+const require = createRequire(import.meta.url);
+const GRE3000Dic = require('./gre3000.json');
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
 const args = process.argv.slice(2);
 const log = console.log;
-let needSpell = true;
+let needSpell = false;
 const logo =
     `   ______ ____   ______ _____ ____   ____   ____ 
   / ____// __ \\ / ____/|__ / / __ \\ / __ \\ / __ \\
@@ -26,8 +29,8 @@ const helpInfo = `
 ${chalk.bold('Usage:')} gre [options]
 
 ${chalk.bold('Options:')}
-${'-'.padEnd(15)}run in default mode(spell word)
-${'-s'.padEnd(15)}run in silence mode(no word spell)
+${'-'.padEnd(15)}run in default mode(no word spell)
+${'-s'.padEnd(15)}run in spell mode(spell word)
 ${'-h'.padEnd(15)}print node command line options (currently set) 
 
 ${chalk.bold('Runtime:')}
@@ -42,16 +45,14 @@ if (args[0] === '-h') {
     log(helpInfo)
     process.exit();
 }
-if (args[0] === '-s') needSpell = false;
+if (args[0] === '-s') needSpell = true;
 
 // read dictionary
 const spinner = ora(`Loading ${chalk.red('dictionary')}`).start();
-const workSheetsFromFile = xlsx.parse(path.join(__dirname, `gre3000.xlsx`));
-const dic = workSheetsFromFile[0].data.map(i => i.slice(-6))
-
+const dic = GRE3000Dic.data;
 const wordsMap = {};
 dic.forEach(item => {
-    const [word, ukp, usp, mean] = item;
+    const [word] = item;
     if (!wordsMap[word[0]]) {
         wordsMap[word[0]] = []
     }
