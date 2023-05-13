@@ -9,21 +9,23 @@ GRE3000 单词来源 : https://github.com/liurui39660/3000/blob/master/3000.xlsx
 tts服务支持：搜狗https://fanyi.sogou.com/reventondc/synthesis?text=${word}&speed=1&lang=enS&from=translateweb&speaker=5
 
 ## 安装
-``` shell
+
+```shell
 git clone https://github.com/Dramalf/GRE3000-cli.git
 cd GRE3000-cli
 npm i
 sudo npm i . -g
 ```
+
 ## 启动
 
-🤓默认模式启动（朗读单词）
+🤓默认模式启动（静音，不朗读单词）
 
 ```shell
 gre 
 ```
 
-🔇静音启动
+📢朗读模式启动
 
 ```shell
 gre -s
