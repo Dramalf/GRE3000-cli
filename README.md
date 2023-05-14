@@ -14,7 +14,7 @@ tts服务支持：搜狗https://fanyi.sogou.com/reventondc/synthesis?text=${word
 git clone https://github.com/Dramalf/GRE3000-cli.git
 cd GRE3000-cli
 npm i
-sudo npm i . -g
+sudo npm link
 ```
 
 ## 启动
