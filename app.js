@@ -35,8 +35,9 @@ ${'-h'.padEnd(15)}print node command line options (currently set)
 
 ${chalk.bold('Runtime:')}
 ${'a-zA-Z'.padEnd(15)}First letter search
-${'.'.padEnd(15)}Full dictionary search
-${'/'.padEnd(15)}Replay the sound
+${'. or 。'.padEnd(15)}Full dictionary search
+${'/ or 、'.padEnd(15)}Replay the sound
+${', or ，'.padEnd(15)}Clear the console
 ${'enter'.padEnd(15)}Switch to next word
 
 ${chalk.cyan.bold('Find more at:'.padEnd(15)) + chalk.magenta.underline('https://github.com/Dramalf/GRE3000-cli')}
@@ -70,8 +71,13 @@ const rl = readline.createInterface({
     input: process.stdin,
 });
 rl.input.on('keypress', (key) => {
-    if (key === '/' && hasAudio) {
+    const repeatSpeak=key === '/'||key==='、' && hasAudio;
+    if (repeatSpeak) {
         sound.play(audioPath)
+    }
+    const clearConsole=key===','||key==='，';
+    if(clearConsole){
+        console.clear();
     }
     return null;
 });
@@ -104,7 +110,7 @@ function show(text) {
     input({
         message: chalk.cyanBright.bold(text)
     }).then((res) => {
-        const useAll = res[0] === '.';
+        const useAll = res[0] === '.'||res[0] ==='。';
         if (useAll) book = dic;
         else if (res[0] && isFirstLetterEnglish(res) && res[0] !== initial) {
             initial = res[0];
