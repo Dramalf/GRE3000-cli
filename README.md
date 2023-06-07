@@ -6,7 +6,7 @@
 
 GRE3000 单词来源 : https://github.com/liurui39660/3000/blob/master/3000.xlsx
 
-tts服务支持：搜狗https://fanyi.sogou.com/reventondc/synthesis?text=${word}&speed=1&lang=enS&from=translateweb&speaker=5
+tts服务支持：有道https://dict.youdao.com/dictvoice?audio=${word}&type=${type}
 
 ## 安装
 
@@ -25,10 +25,10 @@ sudo npm link
 gre 
 ```
 
-📢朗读模式启动
+📢朗读模式启动，后接参数1英式发音，2美式发音（默认美式发音）
 
 ```shell
-gre -s
+gre -s 1
 ```
 
 🩺查看帮助

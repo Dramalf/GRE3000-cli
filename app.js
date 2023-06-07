@@ -18,6 +18,7 @@ const __dirname = path.dirname(__filename)
 const args = process.argv.slice(2);
 const log = console.log;
 let needSpell = false;
+let voiceType = 2;
 const logo =
     `   ______ ____   ______ _____ ____   ____   ____ 
   / ____// __ \\ / ____/|__ / / __ \\ / __ \\ / __ \\
@@ -30,7 +31,7 @@ ${chalk.bold('Usage:')} gre [options]
 
 ${chalk.bold('Options:')}
 ${'-'.padEnd(15)}run in default mode(no word spell)
-${'-s'.padEnd(15)}run in spell mode(spell word)
+${'-s $type'.padEnd(15)}run in spell mode(spell word)
 ${'-h'.padEnd(15)}print node command line options (currently set) 
 
 ${chalk.bold('Runtime:')}
@@ -46,7 +47,10 @@ if (args[0] === '-h') {
     log(helpInfo)
     process.exit();
 }
-if (args[0] === '-s') needSpell = true;
+if (args[0] === '-s') {
+    needSpell = true;
+    voiceType = args[1] in [1, 2] ? args[1] : 2;
+}
 
 // read dictionary
 const spinner = ora(`Loading ${chalk.red('dictionary')}`).start();
@@ -71,12 +75,12 @@ const rl = readline.createInterface({
     input: process.stdin,
 });
 rl.input.on('keypress', (key) => {
-    const repeatSpeak=key === '/'||key==='、' && hasAudio;
+    const repeatSpeak = key === '/' || key === '、' && hasAudio;
     if (repeatSpeak) {
         sound.play(audioPath)
     }
-    const clearConsole=key===','||key==='，';
-    if(clearConsole){
+    const clearConsole = key === ',' || key === '，';
+    if (clearConsole) {
         console.clear();
     }
     return null;
@@ -89,7 +93,7 @@ function isFirstLetterEnglish(str) {
 function speak(word) {
     hasAudio = false;
     if (needSpell && !ttsServiceFail) {
-        fetch(`https://fanyi.sogou.com/reventondc/synthesis?text=${word}&speed=0.8&lang=enS&from=translateweb&speaker=5`)
+        fetch(`https://dict.youdao.com/dictvoice?audio=${word}&type=${voiceType}`)
             .then(res => {
                 const file = fs.createWriteStream(audioPath);
                 res.body.pipe(file)
@@ -110,7 +114,7 @@ function show(text) {
     input({
         message: chalk.cyanBright.bold(text)
     }).then((res) => {
-        const useAll = res[0] === '.'||res[0] ==='。';
+        const useAll = res[0] === '.' || res[0] === '。';
         if (useAll) book = dic;
         else if (res[0] && isFirstLetterEnglish(res) && res[0] !== initial) {
             initial = res[0];
