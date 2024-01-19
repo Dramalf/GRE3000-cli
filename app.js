@@ -77,7 +77,11 @@ const rl = readline.createInterface({
 rl.input.on('keypress', (key) => {
     const repeatSpeak = key === '/' || key === '、' && hasAudio;
     if (repeatSpeak) {
-        sound.play(audioPath)
+        try {
+            sound.play(audioPath)
+        } catch (error) {
+
+        }
     }
     const clearConsole = key === ',' || key === '，';
     if (clearConsole) {
@@ -100,7 +104,11 @@ function speak(word) {
                 file.on('finish', () => {
 
                     hasAudio = true
-                    sound.play(audioPath)
+                    try {
+                        sound.play(audioPath)
+                    } catch (error) {
+            
+                    }
                 })
             }).catch(err => {
                 if (!ttsServiceFail) {
